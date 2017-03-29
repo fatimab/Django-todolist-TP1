@@ -17,7 +17,7 @@ def validate_image(fieldfile_obj):
 
 def avatar_filename(instance, filename):
     fname, dot, extension = filename.rpartition('.')
-    slug = instance.slug
+    slug = instance.user.username
     path = 'gallery/'
     return '%s%s.%s' % (path, slug, extension)
 
@@ -39,7 +39,6 @@ class Member(models.Model):
         blank=True,
         verbose_name="Paramêtres"
     )
-
 
     class Meta:
         app_label = "todo"
@@ -211,5 +210,6 @@ class Task(Parano, models.Model):
     def __str__(self):
         return str(self.name)
 
-    # def get_absolute_url(self):
-    #     return reverse_lazy('todo:tasks:retrieve', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return '/'+str(self.id)+'/'
+        #return reverse_lazy('todo:tasks:retrieve', kwargs={'pk': self.id})
